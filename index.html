@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        #graph {
+            display: flex;
+        }
+
+        .bar {
+            width: 20px;
+            height: 100px;
+            margin: 0 5px;
+            background-color: #3498db;
+            transition: height 0.3s;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="graph">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+    <button onclick="startAnimation()">Start</button>
+    <button onclick="stopAnimation()">Stop</button>
+    <button onclick="resetAnimation()">Reset</button>
+
+    <script>
+        let animationInterval;
+        let bars = document.getElementById('graph').children;
+        let heightValues = [80, 60, 40, 80, 20];
+        let currentIndex = 0;
+
+        function startAnimation() {
+            stopAnimation(); // Stop any existing animation
+            animateGraph();
+        }
+
+        function animateGraph() {
+            bars[currentIndex].style.height = heightValues[currentIndex] + 'px';
+            currentIndex = (currentIndex + 1) % bars.length;
+            animationInterval = setTimeout(animateGraph, 1000);
+        }
+
+        function stopAnimation() {
+            clearTimeout(animationInterval);
+            resetBars();
+        }
+
+        function resetAnimation() {
+            stopAnimation();
+            resetBars();
+        }
+
+        function resetBars() {
+            for (let bar of bars) {
+                bar.style.height = '100px';
+            }
+            currentIndex = 0;
+        }
+    </script>
+</body>
+</html>
